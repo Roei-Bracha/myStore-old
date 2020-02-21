@@ -7,29 +7,32 @@ import {auth} from '../../firebase/firebase.utils'
 
 import './header.styles.scss';
 
-const Header = (props) => (
-  <div className='header'>
-    <Link className='logo-container' to='/'>
-      <Logo className='logo' />
-    </Link>
-    <div className='options'>
-      <Link className='option' to='/shop'>
-        SHOP
+const Header = (props) => {
+  console.log(props)
+  return (
+    <div className='header'>
+      <Link className='logo-container' to='/'>
+        <Logo className='logo' />
       </Link>
-      <Link className='option' to='/shop'>
-        CONTACT
+      <div className='options'>
+        <Link className='option' to='/shop'>
+          SHOP
       </Link>
-      {props.currentUser ? 
-        <div className='option' onClick={()=>auth.signOut()}>
-          SIGN OUT
+        <Link className='option' to='/shop'>
+          CONTACT
+      </Link>
+        {props.currentUser ?
+          <div className='option' onClick={() => auth.signOut()}>
+            SIGN OUT
         </div>
-      :
-        <Link  className='option' to='/signin'>
-          Sign In
+          :
+          <Link className='option' to='/signin'>
+            Sign In
         </Link>
-      }
+        }
+      </div>
     </div>
-  </div>
-);
+  )
+};
 
 export default Header;
