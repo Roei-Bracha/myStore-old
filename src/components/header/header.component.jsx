@@ -7,7 +7,7 @@ import {auth} from '../../firebase/firebase.utils'
 
 import './header.styles.scss';
 
-const Header = (props) => {
+const Header = ({ currentUser }) => {
   return (
     <div className='header'>
       <Link className='logo-container' to='/'>
@@ -20,7 +20,7 @@ const Header = (props) => {
         <Link className='option' to='/shop'>
           CONTACT
       </Link>
-        {props.currentUser ?
+        {currentUser ?
           <div className='option' onClick={() => auth.signOut()}>
             SIGN OUT
         </div>
@@ -35,7 +35,7 @@ const Header = (props) => {
 };
 
 const mapStateToProps =(state)=>({
-  currentUser:state.user.currentUser
+  currentUser: state.user.currentUser
 });
 
 
