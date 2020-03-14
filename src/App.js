@@ -24,28 +24,39 @@ class App extends React.Component {
         // check if he saved in the data base, and retrieve the ref to the database
         const userRef = await createUserProfileDocument(userAuth);
         // get the data from the database and update the state
-        userRef.onSnapshot(snapshot=>{
+        userRef.onSnapshot(snapShot => {
           setCurrentUser({
-            id:snapshot.id,
-            ...snapshot.data()
+            id: snapShot.id,
+            ...snapShot.data()
           });
         });
       }
       // if there is no user connected we will get null so set the current user to null
-      setCurrentUser({currentUser:userAuth})
+      setCurrentUser(userAuth);
     });
   }
   componentWillUnmount(){
-    this.unsubscribeFromAuth()
+    this.unsubscribeFromAuth();
   }
   render(){
+    console.log(this.props.currentUser ==='a')
   return (
     <div>
       <Header/>
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={ShopPage} />
-        <Route exact path='/signin' render={()=> this.props.currentUser ? (<Redirect to={'/'}/>) :(<SignInAndSignUpPage/>)} />
+        <Route
+            exact
+            path='/signin'
+            render={() =>
+                this.props.currentUser ? (
+                    <Redirect to='/' />
+                ) : (
+                    <SignInAndSignUpPage />
+                )
+            }
+        />
       </Switch>
     </div>
   );
@@ -57,6 +68,6 @@ const mapStateToProps = (state)=>({
 })
 
 const mapDispatchToProps = (dispatch) =>({
-  setCurrentUser:user=> dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(App);
